@@ -35,12 +35,7 @@ public class Game
         _bottomArea = _renderer.height - 1;
         _rightArea = _renderer.width - 1;
 
-        _ballPosition = _renderer.Center;
-        _ballDirection = new Vector
-        {
-            x = Random.Shared.NextDouble() > 0.5 ? 1 : -1,
-            y = Random.Shared.NextDouble() > 0.5 ? 1 : -1
-        };
+        ResetBall();
 
         _leftPaddlePosition = new Vector
         {
@@ -71,6 +66,8 @@ public class Game
             _renderer.Clear();
             UpdateBall();
 
+            HandleInput();
+            UpdateLeftPaddle();
             UpdateRightPaddle();
             DrawEverything();
             Thread.Sleep(FrameDuration);
@@ -98,13 +95,39 @@ public class Game
         if (_ballPosition.x == _leftArea)
         {
             _rightPaddleScore++;
-            ResetBall();
+            ResetBall(true);
         }
         if (_ballPosition.x == _rightArea)
         {
             _leftPaddleScore++;
-            ResetBall();
+            ResetBall(true);
         }
+    }
+
+    public async void HandleInput()
+    {
+        await Task.Run(() =>
+        {
+            if (!Console.KeyAvailable)
+                return;
+            var key = Console.ReadKey(true);
+
+            _leftPaddleDirection.y = key.Key switch
+            {
+                ConsoleKey.W or ConsoleKey.UpArrow => -1,
+                ConsoleKey.S or ConsoleKey.DownArrow => 1,
+                _ => 0
+            };
+        });
+    }
+
+    private void UpdateLeftPaddle()
+    {
+        if (_leftPaddleDirection == Vector.Up && _leftPaddlePosition.y == _topArea)
+            _leftPaddleDirection = Vector.Zero;
+        if (_leftPaddleDirection == Vector.Down && _leftPaddlePosition.y + PaddlesVerticalHeight -1 == _bottomArea)
+            _leftPaddleDirection = Vector.Zero;
+        _leftPaddlePosition += _leftPaddleDirection;
     }
 
     private void UpdateRightPaddle()
@@ -121,17 +144,21 @@ public class Game
         {
             _rightPaddlePosition.y = _topArea;
         }
-        if (_rightPaddlePosition.y + PaddlesVerticalHeight > _bottomArea)
+        if (_rightPaddlePosition.y + PaddlesVerticalHeight >= _bottomArea)
         {
             _rightPaddlePosition.y = _bottomArea - PaddlesVerticalHeight;
         }
     }
 
-    private void ResetBall()
+    private void ResetBall(bool draw = false)
     {
-        _renderer.DrawPaddle(_leftPaddlePosition, PaddlesVerticalHeight);
-        _renderer.DrawPaddle(_rightPaddlePosition, PaddlesVerticalHeight);
-        _renderer.DrawScore(_leftPaddleScore, _rightPaddleScore);
+        if (draw)
+        {
+            _renderer.DrawPaddle(_leftPaddlePosition, PaddlesVerticalHeight);
+            _renderer.DrawPaddle(_rightPaddlePosition, PaddlesVerticalHeight);
+            _renderer.DrawScore(_leftPaddleScore, _rightPaddleScore);
+        }
+
         Thread.Sleep(500);
         _ballPosition = _renderer.Center;
         _ballDirection = new Vector
