@@ -2,7 +2,7 @@
 
 public class Game
 {
-    public event Action OnCollision;
+    public event Action? OnCollision;
 
     private const int FrameDuration = 16;
     private const int PaddlesHorizontalOffset = 4;
