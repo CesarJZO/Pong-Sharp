@@ -106,7 +106,7 @@ public class Game
         }
     }
 
-    public async void HandleInput()
+    private async void HandleInput()
     {
         await Task.Run(() =>
         {
