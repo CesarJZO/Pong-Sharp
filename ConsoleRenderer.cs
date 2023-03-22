@@ -45,7 +45,7 @@ public class ConsoleRenderer
 
     public void DrawScore(int player1Score, int player2Score)
     {
-        var message = $"{player1Score,2} : {player2Score,2}";
+        var message = $"{player1Score} : {player2Score}";
         Console.SetCursorPosition(width / 2 - message.Length / 2, 0);
         Console.Write(message);
     }

@@ -2,6 +2,7 @@
 
 public struct Vector
 {
+    public static Vector Zero => new(0, 0);
     public static Vector Left => new(-1, 0);
 
     public static Vector Right => new(1, 0);

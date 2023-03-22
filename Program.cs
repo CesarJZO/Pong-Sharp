@@ -2,7 +2,7 @@
 
 internal static class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
         var renderer = new ConsoleRenderer();
         var game = new Game(renderer);
