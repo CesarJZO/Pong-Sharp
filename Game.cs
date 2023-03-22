@@ -7,6 +7,7 @@ public class Game
     private const int FrameDuration = 16;
     private const int PaddlesHorizontalOffset = 4;
     private const int PaddlesVerticalHeight = 6;
+    private const int MaxScore = 10;
 
     private readonly ConsoleRenderer _renderer;
     private readonly int _topArea;
@@ -25,7 +26,7 @@ public class Game
     private int _leftPaddleScore;
     private int _rightPaddleScore;
 
-    private bool GameOver => _leftPaddleScore == 10 || _rightPaddleScore == 10;
+    private bool GameOver => _leftPaddleScore == MaxScore || _rightPaddleScore == MaxScore;
 
     public Game(ConsoleRenderer renderer)
     {
@@ -72,6 +73,7 @@ public class Game
             DrawEverything();
             Thread.Sleep(FrameDuration);
         }
+        _renderer.DrawGameOver(_leftPaddleScore, _rightPaddleScore);
     }
 
     private void UpdateBall()
@@ -139,7 +141,13 @@ public class Game
         else
             _rightPaddleDirection.y = 0;
 
-        _rightPaddlePosition += _rightPaddleDirection;
+        _rightPaddlePosition += Random.Shared.NextDouble() switch
+        {
+            > 0.1 => _rightPaddleDirection,
+            > 0.01 => Vector.Zero,
+            _ => _rightPaddleDirection * -1
+        };
+
         if (_rightPaddlePosition.y < _topArea)
         {
             _rightPaddlePosition.y = _topArea;

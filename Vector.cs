@@ -29,6 +29,14 @@ public struct Vector
 
     public static Vector operator +(Vector left, Vector right) => new(left.x + right.x, left.y + right.y);
 
+    public static Vector operator -(Vector left, Vector right) => new(left.x - right.x, left.y - right.y);
+
+    public static Vector operator *(Vector left, Vector right) => new(left.x * right.x, left.y * right.y);
+
+    public static Vector operator *(Vector left, int right) => new(left.x * right, left.y * right);
+
+    public static Vector operator /(Vector left, Vector right) => new(left.x / right.x, left.y / right.y);
+
     public static bool operator ==(Vector left, Vector right) => left.Equals(right);
 
     public static bool operator !=(Vector left, Vector right) => !left.Equals(right);
