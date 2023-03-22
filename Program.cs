@@ -1,15 +1,15 @@
 ﻿using Pong;
 
-var renderer = new ConsoleRenderer();
-var game = new Game(renderer);
-
-game.OnCollision += GameOnCollision;
-
-game.Start();
-game.Update();
-// Console.ReadKey();
-
-static async void GameOnCollision()
+internal static class Program
 {
-    await Task.Run(Console.Beep);
+    public static void Main(string[] args)
+    {
+        var renderer = new ConsoleRenderer();
+        var game = new Game(renderer);
+
+        game.OnCollision += renderer.Beep;
+
+        game.Start();
+        game.Update();
+    }
 }

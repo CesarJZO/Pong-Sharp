@@ -51,4 +51,6 @@ public class ConsoleRenderer
     }
 
     public void Clear() => Console.Clear();
+
+    public async void Beep() => await Task.Run(Console.Beep);
 }
