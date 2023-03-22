@@ -2,6 +2,8 @@
 
 public class Game
 {
+    public event Action OnCollision;
+
     private const int FrameDuration = 16;
     private const int PaddlesHorizontalOffset = 4;
     private const int PaddlesVerticalHeight = 6;
@@ -68,9 +70,16 @@ public class Game
     {
         _ballPosition += _ballDirection;
         if (_ballPosition.y == _topArea || _ballPosition.y == _bottomArea)
+        {
             _ballDirection.y *= -1;
+            OnCollision?.Invoke();
+        }
+
         if (_ballPosition.x == _leftArea || _ballPosition.x == _rightArea)
+        {
             _ballDirection.x *= -1;
+            OnCollision?.Invoke();
+        }
 
         _renderer.DrawBall(_ballPosition);
     }
