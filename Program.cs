@@ -1,3 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using Pong;
 
-Console.WriteLine("Hello, World!");
+var game = new Game(new ConsoleRenderer());
+
+game.Start();
+game.Update();
+// Console.ReadKey();

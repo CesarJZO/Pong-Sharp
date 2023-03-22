@@ -8,17 +8,22 @@ public class ConsoleRenderer
     public readonly int width;
     public readonly int height;
 
+    public Vector Center => new(width / 2, height / 2);
+
     public ConsoleRenderer()
     {
+        Console.Clear();
         Console.Title = "Pong";
         Console.CursorVisible = false;
-        width = Console.WindowWidth;
-        height = Console.WindowHeight;
+#pragma warning disable CA1416
+        Console.BufferWidth = width = Console.WindowWidth;
+        Console.BufferHeight = height = Console.WindowHeight;
+#pragma warning restore CA1416
     }
 
-    public void DrawPaddle(Vector position, Vector size)
+    public void DrawPaddle(Vector position, int paddleHeight)
     {
-        for (var i = 0; i < size.y; i++)
+        for (var i = 0; i < paddleHeight; i++)
         {
             Console.SetCursorPosition(position.x, position.y + i);
             Console.Write(Paddle);
@@ -37,4 +42,6 @@ public class ConsoleRenderer
         Console.SetCursorPosition(width / 2 - message.Length / 2, 0);
         Console.Write(message);
     }
+
+    public void Clear() => Console.Clear();
 }
