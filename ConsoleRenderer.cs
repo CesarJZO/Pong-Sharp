@@ -5,6 +5,8 @@ public class ConsoleRenderer
     private const char Paddle = '|';
     private const char Ball = 'O';
 
+    public readonly int top;
+    public readonly int left;
     public readonly int width;
     public readonly int height;
 
@@ -13,8 +15,13 @@ public class ConsoleRenderer
     public ConsoleRenderer()
     {
         Console.Clear();
+
         Console.Title = "Pong";
         Console.CursorVisible = false;
+
+        top = Console.WindowTop;
+        left = Console.WindowLeft;
+
 #pragma warning disable CA1416
         Console.BufferWidth = width = Console.WindowWidth;
         Console.BufferHeight = height = Console.WindowHeight;

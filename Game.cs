@@ -26,8 +26,8 @@ public class Game
     public Game(ConsoleRenderer renderer)
     {
         _renderer = renderer;
-        _topArea = 0;
-        _leftArea = 0;
+        _topArea = renderer.top;
+        _leftArea = renderer.left;
         _bottomArea = _renderer.height - 1;
         _rightArea = _renderer.width - 1;
 

@@ -1,11 +1,15 @@
 ﻿using Pong;
 
-var game = new Game(new ConsoleRenderer());
+var renderer = new ConsoleRenderer();
+var game = new Game(renderer);
 
-#pragma warning disable CA1416
-game.OnCollision += () => Console.Beep(100, 100);
-#pragma warning restore CA1416
+game.OnCollision += GameOnCollision;
 
 game.Start();
 game.Update();
 // Console.ReadKey();
+
+static async void GameOnCollision()
+{
+    await Task.Run(Console.Beep);
+}
