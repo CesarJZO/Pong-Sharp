@@ -1,15 +1,14 @@
 ﻿using Pong;
 
-internal static class Program
+try
 {
-    public static void Main()
-    {
-        var renderer = new ConsoleRenderer();
-        var game = new Game(renderer);
-
-        game.OnCollision += renderer.Beep;
-
-        game.Start();
-        game.Update();
-    }
+    var renderer = new ConsoleRenderer();
+    var game = new Game(renderer);
+    game.OnCollision += renderer.Beep;
+    game.Start();
+    game.Update();
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
 }

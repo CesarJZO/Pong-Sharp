@@ -14,6 +14,9 @@ public class ConsoleRenderer
 
     public ConsoleRenderer()
     {
+        if (Console.WindowHeight < 8 || Console.WindowWidth < 40)
+            throw new Exception("Not enough space in terminal");
+
         Console.Clear();
 
         Console.Title = "Pong";
